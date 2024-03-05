@@ -2,7 +2,7 @@ set search_path to blogsystem;
 -- The citext extension is not installed by default in PostgreSQL. citext data type is a case-insensitive text type.
 CREATE EXTENSION IF NOT EXISTS citext;
 
-create table if not exists users
+create table users
 (
     user_id    uuid primary key     default gen_random_uuid(),
     email      citext      not null unique,
