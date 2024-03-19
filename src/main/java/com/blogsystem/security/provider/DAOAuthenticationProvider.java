@@ -1,6 +1,6 @@
 package com.blogsystem.security.provider;
 
-import com.blogsystem.security.service.UserDetailService;
+import com.blogsystem.security.service.UserDetailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -14,19 +14,19 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class DAOAuthenticationProvider implements AuthenticationProvider {
-    private final UserDetailService userDetailService;
+    private final UserDetailServiceImpl userDetailServiceImpl;
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = String.valueOf(authentication.getCredentials());
-        UserDetails userDetails = userDetailService.loadUserByUsername(username);
+        var userDetails = userDetailServiceImpl.loadUserByUsername(username);
         if (userDetails != null){
             if (!userDetails.isEnabled()) {
                 throw new BadCredentialsException("User is forbidden to login");
             }
-            if (passwordEncoder.matches(password, userDetails.getPassword())){
+                if (passwordEncoder.matches(password, userDetails.getPassword())){
                 return new UsernamePasswordAuthenticationToken(username, password, userDetails.getAuthorities());
             }
         }

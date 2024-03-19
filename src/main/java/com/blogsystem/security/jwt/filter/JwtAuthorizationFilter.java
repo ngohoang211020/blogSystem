@@ -22,18 +22,27 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private final TokenProvider tokenProvider;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String tokenValue = resolveToken(request);
-        if (tokenValue==null || tokenValue.isBlank() || !tokenProvider.validateToken(tokenValue)) {
-            log.debug("no valid JWT token found, uri: {}", request.getRequestURI());
-            // Absolutely make sure you don't call the rest of the filter chain!!
+    protected void doFilterInternal(HttpServletRequest httpServletRequest,
+                                    HttpServletResponse httpServletResponse,
+                                    FilterChain filterChain) throws ServletException, IOException {
+        final String tokenValue = resolveToken(httpServletRequest);
+        if (tokenValue == null || tokenValue.isBlank() || !tokenProvider.validateToken(tokenValue)) {
+            log.debug("no valid JWT token found, uri: {}", httpServletRequest.getRequestURI());
+            // if Authorization header does not exist or token is not valid
+            // then skip this filter
+            // and continue to execute next filter class
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
             return;
         }
         var authentication = tokenProvider.getAuthentication(tokenValue);
+
         var newContext = SecurityContextHolder.createEmptyContext();
         newContext.setAuthentication(authentication);
+
+        // finally, give the authentication token to Spring Security Context
         SecurityContextHolder.setContext(newContext);
-        filterChain.doFilter(request, response);
+
+        filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
     private String resolveToken(HttpServletRequest request) {

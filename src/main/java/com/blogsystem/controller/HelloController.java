@@ -1,6 +1,11 @@
 package com.blogsystem.controller;
 
+import com.blogsystem.common.ResponseBody;
+import com.blogsystem.security.common.utils.CurrentUserUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController {
     @GetMapping
     @PreAuthorize("hasAnyAuthority('SUPER_ADMIN')")
-    public String hello(){
-        return "helloa";
+    public ResponseBody<String> hello(){
+        var currentUser = CurrentUserUtils.getCurrentUser();
+        assert currentUser != null;
+        return new ResponseBody<>(HttpStatus.OK, currentUser.getName(),"Authorized successfully");
     }
 }

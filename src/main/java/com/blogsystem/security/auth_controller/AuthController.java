@@ -1,4 +1,4 @@
-package com.blogsystem.security.auth;
+package com.blogsystem.security.auth_controller;
 
 import com.blogsystem.security.dto.LoginRequest;
 import com.blogsystem.security.dto.LoginResponse;
@@ -17,13 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
-
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         var token = authService.login(loginRequest);
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
-
     @PostMapping("/logout")
     public ResponseEntity<Void> logout() {
 //        authService.removeToken();

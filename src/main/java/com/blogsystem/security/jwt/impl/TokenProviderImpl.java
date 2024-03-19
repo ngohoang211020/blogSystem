@@ -79,13 +79,12 @@ public class TokenProviderImpl implements TokenProvider, InitializingBean {
 
     @Override
     public Authentication getAuthentication(String token) {
-        Claims claims = Jwts.parser()
+        var claims = Jwts.parser()
                 .setSigningKey(key)
                 .parseClaimsJws(token)
                 .getBody();
 
-        Collection<? extends GrantedAuthority> authorities =
-                Arrays.stream(claims.get(SecurityConstants.ROLES).toString().split(","))
+        var authorities = Arrays.stream(claims.get(SecurityConstants.ROLES).toString().split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
@@ -95,7 +94,7 @@ public class TokenProviderImpl implements TokenProvider, InitializingBean {
     }
 
     private String createToken(Authentication authentication, long validity) {
-        String authorities = authentication.getAuthorities().stream()
+        var authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
         var now = new Date();

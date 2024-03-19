@@ -18,14 +18,14 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class UserDetailService implements UserDetailsService {
+public class UserDetailServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         var userEntity= userRepository.findByUsername(username).orElseThrow(
-                () -> new BadCredentialsException("The user name or password is not correct.")
+                () -> new UsernameNotFoundException("The user name or password is not correct.")
         );
         return build(userEntity);
     }

@@ -1,5 +1,6 @@
 package com.blogsystem.entity;
 
+import com.blogsystem.enums.RoleType;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -22,10 +23,12 @@ public class RoleEntity {
     private UUID roleId;
 
     @Column(nullable = false)
-    private String code;
+    @Enumerated(EnumType.STRING)
+    private RoleType code;
 
     @Column(nullable = false)
     private String name;
+
     private int status;
 
     private String description;
