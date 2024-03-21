@@ -1,7 +1,7 @@
-package com.blogsystem.security.jwt.filter;
+package com.blogsystem.security.filter;
 
-import com.blogsystem.security.common.constants.SecurityConstants;
-import com.blogsystem.security.jwt.TokenProvider;
+import com.blogsystem.security.constants.SecurityConstants;
+import com.blogsystem.security.service.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,7 +31,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             // if Authorization header does not exist or token is not valid
             // then skip this filter
             // and continue to execute next filter class
-            filterChain.doFilter(httpServletRequest, httpServletResponse);
             return;
         }
         var authentication = tokenProvider.getAuthentication(tokenValue);
@@ -52,4 +51,11 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         }
         return null;
     }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        return request.getServletPath()
+                .equals("/auth/login");
+    }
+
 }

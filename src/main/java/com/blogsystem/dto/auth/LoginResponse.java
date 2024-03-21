@@ -1,4 +1,4 @@
-package com.blogsystem.security.dto;
+package com.blogsystem.dto.auth;
 
 import com.blogsystem.enums.TokenType;
 import lombok.AllArgsConstructor;

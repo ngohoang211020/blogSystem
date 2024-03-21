@@ -1,4 +1,4 @@
-package com.blogsystem.security.jwt;
+package com.blogsystem.security.service;
 
 import org.springframework.security.core.Authentication;
 

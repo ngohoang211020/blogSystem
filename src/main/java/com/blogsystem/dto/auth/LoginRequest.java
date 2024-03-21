@@ -1,4 +1,4 @@
-package com.blogsystem.security.dto;
+package com.blogsystem.dto.auth;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;

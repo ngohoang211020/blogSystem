@@ -1,11 +1,10 @@
-package com.blogsystem.security.service;
+package com.blogsystem.security.service.impl;
 
 import com.blogsystem.entity.UserEntity;
 import com.blogsystem.repository.RoleRepository;
 import com.blogsystem.repository.UserRepository;
 import com.blogsystem.security.model.JwtUser;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

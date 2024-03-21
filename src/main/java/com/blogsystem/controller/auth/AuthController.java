@@ -1,8 +1,8 @@
-package com.blogsystem.security.auth_controller;
+package com.blogsystem.controller.auth;
 
-import com.blogsystem.security.dto.LoginRequest;
-import com.blogsystem.security.dto.LoginResponse;
-import com.blogsystem.security.service.AuthService;
+import com.blogsystem.dto.auth.LoginRequest;
+import com.blogsystem.dto.auth.LoginResponse;
+import com.blogsystem.security.service.impl.AuthServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
-    private final AuthService authService;
+    private final AuthServiceImpl authServiceImpl;
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
-        var token = authService.login(loginRequest);
+        var token = authServiceImpl.login(loginRequest);
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
     @PostMapping("/logout")

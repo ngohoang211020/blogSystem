@@ -1,7 +1,7 @@
-package com.blogsystem.security.jwt.impl;
+package com.blogsystem.security.service.impl;
 
-import com.blogsystem.security.common.constants.SecurityConstants;
-import com.blogsystem.security.jwt.TokenProvider;
+import com.blogsystem.security.constants.SecurityConstants;
+import com.blogsystem.security.service.TokenProvider;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -15,10 +15,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
-import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 

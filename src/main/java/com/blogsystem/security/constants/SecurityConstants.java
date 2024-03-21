@@ -1,4 +1,4 @@
-package com.blogsystem.security.common.constants;
+package com.blogsystem.security.constants;
 
 import org.springframework.beans.factory.annotation.Value;
 

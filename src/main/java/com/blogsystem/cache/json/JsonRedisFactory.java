@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.util.CollectionUtils;
 
@@ -20,7 +19,6 @@ import java.util.stream.Collectors;
 
 public class JsonRedisFactory {
     private static final Logger logger = LoggerFactory.getLogger(JsonRedisFactory.class);
-
     private final ConcurrentMap<Class<?>, RedisTemplate<String, Object>> templates = new ConcurrentHashMap<>();
 
     private final RedisConnectionFactory connectionFactory;
@@ -37,7 +35,7 @@ public class JsonRedisFactory {
             return;
         }
 
-        RedisTemplate<String, Object> template = getRedisTemplate(data.getClass());
+        var template = getRedisTemplate(data.getClass());
 
         template.opsForValue().set(key, data, expiration);
         logger.info("Inserted/Updated cache entry for key [{}]", key);
@@ -49,7 +47,7 @@ public class JsonRedisFactory {
             return;
         }
 
-        RedisTemplate<String, Object> template = getRedisTemplate(List.class);
+        var template = getRedisTemplate(List.class);
 
         try {
             template.opsForValue().set(key, objectMapper.writeValueAsString(items), expiration);
@@ -64,7 +62,7 @@ public class JsonRedisFactory {
             throw new IllegalArgumentException("Null value was given when trying to cache for key " + key);
         }
 
-        RedisTemplate<String, Object> template = getRedisTemplate(value.getClass());
+        var template = getRedisTemplate(value.getClass());
 
         template.opsForValue().set(key, value, expiration);
         logger.info("Inserted/Updated cache entry for key [{}]", key);
@@ -76,7 +74,7 @@ public class JsonRedisFactory {
             return;
         }
 
-        RedisTemplate<String, Object> template = getRedisTemplate(List.class);
+        var template = getRedisTemplate(List.class);
 
         template.opsForValue().set(key, objectMapper.writeValueAsString(items), expiration);
         logger.info("Inserted/Updated cache entry for key [{}]", key);
@@ -84,9 +82,9 @@ public class JsonRedisFactory {
 
 
     public <T> T getAsMono(String key, Class<T> clazz) {
-        RedisTemplate<String, Object> template = getRedisTemplate(clazz);
+        var template = getRedisTemplate(clazz);
 
-        Object cached = template.opsForValue().get(key);
+        var cached = template.opsForValue().get(key);
 
         if (cached == null) {
             logger.info("Cache miss for key [{}]", key);
@@ -97,9 +95,9 @@ public class JsonRedisFactory {
     }
 
     public <T> List<T> getAsList(String key, Class<T> clazz) {
-        RedisTemplate<String, Object> template = getRedisTemplate(clazz);
+        var template = getRedisTemplate(clazz);
 
-        Object cached = template.opsForValue().get(key);
+        var cached = template.opsForValue().get(key);
 
         if (cached == null) {
             logger.info("Cache miss for key [{}]", key);
@@ -119,7 +117,7 @@ public class JsonRedisFactory {
     }
 
     public <T> boolean has(String key, Class<T> clazz) {
-        RedisTemplate<String, Object> template = getRedisTemplate(clazz);
+        var template = getRedisTemplate(clazz);
 
         return Boolean.TRUE.equals(template.hasKey(key));
     }
@@ -129,7 +127,7 @@ public class JsonRedisFactory {
     }
 
     public <T> void evict(String key, Class<T> clazz) {
-        RedisTemplate<String, Object> template = getRedisTemplate(clazz);
+        var template = getRedisTemplate(clazz);
 
         template.delete(key);
     }
@@ -143,9 +141,9 @@ public class JsonRedisFactory {
      * @implSpec https://docs.spring.io/spring-data/redis/docs/current/api/org/springframework/data/redis/core/RedisOperations.html#getExpire-K-
      */
     public <T> boolean isAboutToBeExpired(String key, Class<T> clazz, long checkpointInSecond) {
-        RedisTemplate<String, Object> template = getRedisTemplate(clazz);
+        var template = getRedisTemplate(clazz);
 
-        Long ttlInSecond = template.getExpire(key);
+        var ttlInSecond = template.getExpire(key);
 
         if (ttlInSecond == null || ttlInSecond <= -2) {
             return true;
@@ -157,8 +155,9 @@ public class JsonRedisFactory {
         return ttlInSecond <= checkpointInSecond;
     }
 
+
     private <T> RedisTemplate<String, Object> getRedisTemplate(Class<T> clazz) {
-        RedisTemplate<String, Object> template = templates.get(clazz);
+        var template = templates.get(clazz);
 
         if (template == null) {
             template = buildGenericJacksonRedisTemplate();
@@ -169,9 +168,9 @@ public class JsonRedisFactory {
     }
 
     protected RedisTemplate<String, Object> buildGenericJacksonRedisTemplate() {
-        RedisSerializer<?> valueSerializer = new GenericJackson2JsonRedisSerializer(objectMapper);
+        var valueSerializer = new GenericJackson2JsonRedisSerializer(objectMapper);
 
-        RedisTemplate<String, Object> template = new RedisTemplate<>();
+        var template = new RedisTemplate<String, Object>();
         template.setConnectionFactory(connectionFactory);
         template.setEnableDefaultSerializer(false);
         template.setKeySerializer(new StringRedisSerializer());
@@ -182,4 +181,6 @@ public class JsonRedisFactory {
 
         return template;
     }
+
 }
+
