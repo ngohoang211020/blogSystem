@@ -1,6 +1,5 @@
 package com.blogsystem.security.config;
 
-import com.blogsystem.security.filter.AuthenticationLoggingFilter;
 import com.blogsystem.security.filter.JwtAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -32,7 +31,6 @@ import static com.blogsystem.security.constants.SecurityConstants.SYSTEM_WHITELI
 @RequiredArgsConstructor
 public class WebSecurityConfig {
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
-    private final AuthenticationLoggingFilter authenticationLoggingFilter;
     private final AuthenticationEntryPoint unauthorizedHandler;
     private final AccessDeniedHandler accessDeniedHandler;
 
@@ -60,7 +58,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(
                         authorize -> authorize
                                 .requestMatchers(HttpMethod.POST, SYSTEM_WHITELIST).permitAll()
-                                .requestMatchers(HttpMethod.GET,"/kaka").hasRole("SUPER_ADMIN")
+                                .requestMatchers(HttpMethod.GET,"/kaka").hasAuthority("SUPER_ADMIN")
                                 // for everything else, the user has to be authenticated
                                 .anyRequest().authenticated()
                 )
@@ -71,7 +69,6 @@ public class WebSecurityConfig {
                         .authenticationEntryPoint(unauthorizedHandler))
                 // adding the custom filter before UsernamePasswordAuthenticationFilter in the filter chain
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterAfter(authenticationLoggingFilter, UsernamePasswordAuthenticationFilter.class)
                 // setting stateless session, because we choose to implement Rest API
                 .sessionManagement(s -> s
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));

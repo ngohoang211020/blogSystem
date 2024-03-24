@@ -25,13 +25,10 @@ public class LoggingAspect {
         var method = signature.getMethod();
         var info = method.getName() + " - (" + pjp.getSignature().getDeclaringTypeName() + ")";
         var start = System.currentTimeMillis();
-        log.info("###########API LOGGING############");
         log.info("Going to call the method:" + info);
         var output = pjp.proceed(pjp.getArgs());
-        log.info("Method execution completed:" + info);
         var elapsedTime = System.currentTimeMillis() - start;
         log.info("Method execution time: " + elapsedTime + " miliseconds.");
-        log.info("###########END-API LOGGING#########");
         return output;
     }
 }
