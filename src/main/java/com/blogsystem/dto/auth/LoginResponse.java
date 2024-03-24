@@ -1,18 +1,16 @@
 package com.blogsystem.dto.auth;
 
 import com.blogsystem.enums.TokenType;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import java.util.List;
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class LoginResponse {
     private String accessToken;
     private String refreshToken;

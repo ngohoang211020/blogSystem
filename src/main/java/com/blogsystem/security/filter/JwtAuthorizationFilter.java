@@ -2,6 +2,10 @@ package com.blogsystem.security.filter;
 
 import com.blogsystem.security.constants.SecurityConstants;
 import com.blogsystem.security.service.TokenProvider;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,10 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
@@ -28,19 +28,16 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         final String tokenValue = resolveToken(httpServletRequest);
         if (tokenValue == null || tokenValue.isBlank() || !tokenProvider.validateToken(tokenValue)) {
             log.debug("no valid JWT token found, uri: {}", httpServletRequest.getRequestURI());
-            // if Authorization header does not exist or token is not valid
-            // then skip this filter
-            // and continue to execute next filter class
+            // if Authorization header does not exist or token is not valid then skip this filter and continue to execute next filter class
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
             return;
         }
         var authentication = tokenProvider.getAuthentication(tokenValue);
-
         var newContext = SecurityContextHolder.createEmptyContext();
         newContext.setAuthentication(authentication);
 
         // finally, give the authentication token to Spring Security Context
         SecurityContextHolder.setContext(newContext);
-
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
@@ -57,5 +54,4 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         return request.getServletPath()
                 .equals("/auth/login");
     }
-
 }

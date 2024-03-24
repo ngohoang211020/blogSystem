@@ -9,6 +9,6 @@ import java.util.UUID;
 
 public interface RoleRepository extends JpaRepository<RoleEntity, UUID> {
     @Query("SELECT r.code from RoleEntity r " +
-            "where exists(select 1 from UserRoleEntity ur where ur.user.userId = :userId)")
+            "where exists(select 1 from UserRoleEntity ur where ur.user.userId = :userId and r.roleId= ur.role.roleId)")
     List<String> findAllRoleCodeByUserId(UUID userId);
 }

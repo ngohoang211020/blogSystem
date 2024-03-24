@@ -1,15 +1,15 @@
 package com.blogsystem.entity;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.id.UUIDGenerator;
 
-import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -21,7 +21,7 @@ public class UserEntity {
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
             name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
+            type = UUIDGenerator.class
     )
     private UUID userId;
 
@@ -48,11 +48,12 @@ public class UserEntity {
     private OffsetDateTime updatedAt;
 
     @PrePersist
-    public void prePersist(){
-        this.createdAt= OffsetDateTime.now();
+    public void prePersist() {
+        this.createdAt = OffsetDateTime.now();
     }
+
     @PreUpdate
-    public void preUpdate(){
-        this.updatedAt=OffsetDateTime.now();
+    public void preUpdate() {
+        this.updatedAt = OffsetDateTime.now();
     }
 }

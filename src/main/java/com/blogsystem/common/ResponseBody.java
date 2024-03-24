@@ -21,4 +21,8 @@ public class ResponseBody<T> {
         this.data = data;
         this.message = message;
     }
+    public ResponseBody(HttpStatus httpStatus, T data) {
+        this.httpStatus = httpStatus.value();
+        this.data = data;
+    }
 }

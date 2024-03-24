@@ -5,6 +5,7 @@ import com.blogsystem.repository.RoleRepository;
 import com.blogsystem.repository.UserRepository;
 import com.blogsystem.security.model.JwtUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class UserDetailServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 

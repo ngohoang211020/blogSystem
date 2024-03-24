@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.11</version>
+        <version>3.2.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.blogsystem</groupId>
@@ -14,9 +14,12 @@
     <name>blogSystem</name>
     <description>blogSystem</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <jackson.version>2.16.0</jackson.version>
         <jjwt.version>0.10.6</jjwt.version>
+        <velocity-core.version>2.3</velocity-core.version>
+        <velocity-tool.version>3.1</velocity-tool.version>
+<!--  AccessDecisionVoter was marked as deprecated, recommended to use AuthorizationManager instead-->
     </properties>
     <dependencies>
         <dependency>
@@ -26,10 +29,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -78,6 +77,16 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+            <version>${velocity-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.velocity.tools</groupId>
+            <artifactId>velocity-tools-generic</artifactId>
+            <version>${velocity-tool.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

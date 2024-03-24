@@ -3,8 +3,9 @@ package com.blogsystem.entity;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import jakarta.persistence.*;
+import org.hibernate.id.UUIDGenerator;
 
-import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -17,7 +18,7 @@ public class UserRoleEntity {
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
             name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
+            type = UUIDGenerator.class
     )
     private UUID userRoleId;
 
