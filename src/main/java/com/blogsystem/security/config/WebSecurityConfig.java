@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,6 +17,12 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 import static com.blogsystem.security.constants.SecurityConstants.SYSTEM_WHITELIST;
 
@@ -38,16 +43,26 @@ public class WebSecurityConfig {
     }
 
     @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        var configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Collections.singletonList(CorsConfiguration.ALL));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH"));
+        var source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 // disabling csrf since we won't use form login
                 // giving permission to every request for /login endpoint
                 .authorizeHttpRequests(
-                        request -> request.requestMatchers(HttpMethod.POST, SYSTEM_WHITELIST)
-                                .permitAll()
+                        authorize -> authorize
+                                .requestMatchers(HttpMethod.POST, SYSTEM_WHITELIST).permitAll()
+                                .requestMatchers(HttpMethod.GET,"/kaka").hasRole("SUPER_ADMIN")
                                 // for everything else, the user has to be authenticated
-                                .anyRequest()
-                                .authenticated()
+                                .anyRequest().authenticated()
                 )
                 // setting custom entry point for unauthenticated request
                 // setting custom access denied handler for not authorized request

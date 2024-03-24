@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/kaka")
 public class HelloController {
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN')")
     public ResponseBody<String> hello(){
         var currentUser = CurrentUserUtils.getCurrentUser();
         assert currentUser != null;

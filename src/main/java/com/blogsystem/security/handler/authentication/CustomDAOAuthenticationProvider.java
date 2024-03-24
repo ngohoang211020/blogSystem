@@ -1,4 +1,4 @@
-package com.blogsystem.security.provider;
+package com.blogsystem.security.handler.authentication;
 
 import com.blogsystem.security.service.impl.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
