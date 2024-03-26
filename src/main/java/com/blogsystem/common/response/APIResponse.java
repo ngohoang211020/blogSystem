@@ -1,6 +1,7 @@
 package com.blogsystem.common.response;
 
 import com.blogsystem.common.constant.BlogSystemErrorCode;
+import com.blogsystem.dto.BaseResponse;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,14 +9,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 
-public class APIResponse<T> extends ResponseEntity {
+public class APIResponse<T extends BaseResponse> extends ResponseEntity {
 
     public APIResponse(HttpStatus status) {
         this(APIBody.builder().code(BlogSystemErrorCode.SUCCESS_CODE).build(), null, status);
     }
 
     public APIResponse(T body, HttpStatus status) {
-        this(APIBody.builder().code(BlogSystemErrorCode.SUCCESS_CODE).data(body).build(), null, status);
+        this(APIBody.builder().code(body.getCode()).data(body).build(), null, status);
     }
 
     public APIResponse(int code, T body) {
@@ -34,23 +35,23 @@ public class APIResponse<T> extends ResponseEntity {
         super(body, headers, httpStatus);
     }
 
-    public static <T> APIResponse<T> okStatus(T body) {
+    public static <T extends BaseResponse> APIResponse<T> okStatus(T body) {
         return new APIResponse<T>(body, HttpStatus.OK);
     }
 
-    public static <T> APIResponse<T> okStatus() {
+    public static <T extends BaseResponse> APIResponse<T> okStatus() {
         return new APIResponse<T>(HttpStatus.OK);
     }
 
-    public static <T> APIResponse<T> okStatus(T body, int code) {
+    public static <T extends BaseResponse> APIResponse<T> okStatus(T body, int code) {
         return new APIResponse<T>(code, body, HttpStatus.OK);
     }
 
-    public static <T> APIResponse<T> errorStatus(T body, HttpStatus httpStatus) {
+    public static <T extends BaseResponse> APIResponse<T> errorStatus(T body, HttpStatus httpStatus) {
         return new APIResponse<T>(body, httpStatus);
     }
 
-    public static <T> APIResponse<T> errorStatus(int code, T body, HttpStatus httpStatus) {
+    public static <T extends BaseResponse> APIResponse<T> errorStatus(int code, T body, HttpStatus httpStatus) {
         return new APIResponse<T>(code, body, httpStatus);
     }
 
