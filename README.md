@@ -1,6 +1,6 @@
 # Blog System Project
 
-This project is a blog system developed using Maven, Spring Boot, Java, PostgreSQL, Redis and Flyway. The blog system provides a platform for users to post articles, share thoughts, and engage in discussions.
+This project is a blog system developed using Maven, Spring Boot, Java, PostgreSQL, Redis, Cloudinary, STMP and Flyway. The blog system provides a platform for users to post articles, share thoughts, and engage in discussions.
 
 ## Features
 
