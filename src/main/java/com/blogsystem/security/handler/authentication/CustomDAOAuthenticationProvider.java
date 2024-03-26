@@ -23,7 +23,7 @@ public class CustomDAOAuthenticationProvider implements AuthenticationProvider {
         var userDetails = userDetailsServiceImpl.loadUserByUsername(username);
         if (userDetails != null){
             if (!userDetails.isEnabled()) {
-                throw new BadCredentialsException("User is forbidden to login");
+                throw new BadCredentialsException("User is inactive");
             }
                 if (passwordEncoder.matches(password, userDetails.getPassword())){
                 return new UsernamePasswordAuthenticationToken(username, password, userDetails.getAuthorities());

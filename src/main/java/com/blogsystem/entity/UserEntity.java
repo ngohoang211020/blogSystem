@@ -38,6 +38,12 @@ public class UserEntity {
 
     private int status;
 
+    @Column(nullable = false)
+    private String profilePicture;
+
+    @Column(nullable = false)
+    private String phoneNumber;
+
     @OneToMany(mappedBy = "user")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<UserRoleEntity> userRoles = new ArrayList<>();
