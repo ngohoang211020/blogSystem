@@ -12,4 +12,9 @@ public interface UserRepository extends JpaRepository<UserEntity, UUID> {
             "from UserEntity u " +
             "where u.username=:username")
     Optional<UserEntity> findByUsername(String username);
+
+    @Query("SELECT u " +
+            "from UserEntity u " +
+            "where u.email=:email")
+    Optional<UserEntity> findByEmail(String email);
 }

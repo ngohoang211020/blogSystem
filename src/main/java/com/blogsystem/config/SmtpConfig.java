@@ -3,6 +3,7 @@ package com.blogsystem.config;
 import com.blogsystem.smtp.SmtpProperties;
 import com.blogsystem.smtp.SmtpTemplateFactory;
 import com.blogsystem.smtp.SmtpUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,6 +40,16 @@ public class SmtpConfig {
         return javaMailSender;
     }
 
+    @Bean
+    public SmtpTemplateFactory smtpTemplateFactory() {
+        return new SmtpTemplateFactory();
+    }
+
+    @Bean
+    public SmtpUtil smtpUtil(JavaMailSender javaMailSender, SmtpProperties smtpProperties, SmtpTemplateFactory smtpTemplateFactory, ObjectMapper objectMapper) {
+        return new SmtpUtil(javaMailSender, smtpProperties, smtpTemplateFactory,objectMapper);
+    }
+
     private Properties properties() {
         var properties = new Properties();
         properties.put("mail.transport.protocol", "smtp");
@@ -46,15 +57,5 @@ public class SmtpConfig {
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.debug", "false");
         return properties;
-    }
-
-    @Bean
-    public SmtpTemplateFactory smtpTemplateFactory() {
-        return new SmtpTemplateFactory();
-    }
-
-    @Bean
-    public SmtpUtil smtpUtil(JavaMailSender javaMailSender, SmtpProperties smtpProperties, SmtpTemplateFactory smtpTemplateFactory) {
-        return new SmtpUtil(javaMailSender, smtpProperties, smtpTemplateFactory);
     }
 }

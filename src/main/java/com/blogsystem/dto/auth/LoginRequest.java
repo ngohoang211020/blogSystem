@@ -8,7 +8,6 @@ import lombok.*;
 
 @Getter
 @Setter
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class LoginRequest {
     private String username;
     private String password;
