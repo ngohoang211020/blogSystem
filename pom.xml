@@ -20,6 +20,7 @@
         <velocity-core.version>2.3</velocity-core.version>
         <velocity-tool.version>3.1</velocity-tool.version>
         <cloudinary.version>1.34.0</cloudinary.version>
+        <springdoc-openapi.version>2.3.0</springdoc-openapi.version>
 <!--  AccessDecisionVoter was marked as deprecated, recommended to use AuthorizationManager instead-->
     </properties>
     <dependencies>
@@ -105,6 +106,16 @@
             <groupId>com.cloudinary</groupId>
             <artifactId>cloudinary-http44</artifactId>
             <version>${cloudinary.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc-openapi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+            <version>${springdoc-openapi.version}</version>
         </dependency>
     </dependencies>
 

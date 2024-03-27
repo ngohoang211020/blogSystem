@@ -4,7 +4,6 @@ import com.blogsystem.security.filter.JwtAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -57,8 +56,7 @@ public class WebSecurityConfig {
                 // giving permission to every request for /login endpoint
                 .authorizeHttpRequests(
                         authorize -> authorize
-                                .requestMatchers(HttpMethod.POST, SYSTEM_WHITELIST).permitAll()
-                                .requestMatchers(HttpMethod.GET,"/kaka").hasAuthority("SUPER_ADMIN")
+                                .requestMatchers(SYSTEM_WHITELIST).permitAll()
                                 // for everything else, the user has to be authenticated
                                 .anyRequest().authenticated()
                 )
