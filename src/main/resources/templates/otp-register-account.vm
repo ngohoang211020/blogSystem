@@ -5,7 +5,7 @@
     <title>OTP for blog system login</title>
 </head>
 <body>
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8djRNGVH1wxLDndk5WsoSjl6ioW3Fj83DokQvFi0OZw&s" alt="Blog System Logo" width="150" height="100">
+    <img src="${profilePicture}" alt="Blog System Logo" width="250">
     <h1>Registration OTP</h1>
     <p>Dear ${username},</p>
     <p>Welcome to our platform! To complete your registration process, please use the following OTP:</p>

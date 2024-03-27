@@ -13,7 +13,7 @@ public class OTPRegistrationEmailEvent extends ApplicationEvent {
     private String email;
     private int duration;
     private String otp;
-
+    private String profilePicture;
 
     public OTPRegistrationEmailEvent(Object source) {
         super(source);

@@ -44,11 +44,16 @@ public class AccountServiceImpl implements AccountService {
         user.setProfilePicture(profilePictureFile.getOriginalFilename());
         user = userRepository.save(user);
 
-        var uploadResp = cloudinaryUtil.uploadImage(CloudinarySubPath.ACCOUNT.content, FileUtil.getFilenameWithoutExtension(profilePictureFile.getOriginalFilename()),profilePictureFile.getBytes());
+        var uploadResp = cloudinaryUtil.uploadImage(
+                CloudinarySubPath.ACCOUNT.content,
+                FileUtil.getFilenameWithoutExtension(profilePictureFile.getOriginalFilename()),
+                profilePictureFile.getBytes());
 
         var otp = OTPUtil.generateOTP();
         cacheUtil.saveOTPRegistration(user.getEmail(), otp);
+
         var otpEvent = buildRegistrationEvent(user,otp);
+        otpEvent.setProfilePicture(uploadResp.getUrl());
         emailPublisher.publishSendEmailEvent(otpEvent);
         return new RegisterAccountResponse(user.getEmail(), user.getUserId(),uploadResp.getUrl());
     }
