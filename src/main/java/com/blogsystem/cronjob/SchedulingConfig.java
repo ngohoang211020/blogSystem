@@ -31,8 +31,6 @@ public class SchedulingConfig implements SchedulingConfigurer {
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
         taskRegistrar.setScheduler(threadPoolTaskScheduler());
-        taskRegistrar.addFixedRateTask(context.getBean(TestTask1.class), 500);
-        taskRegistrar.addFixedRateTask(context.getBean(TestTask2.class), 500);
         log.info("Registered {} scheduled task", taskRegistrar.getCronTaskList().size());
     }
 }
