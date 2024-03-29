@@ -49,7 +49,7 @@ jobs:
           password: ${{ env.DOCKERHUB_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build -t 211020/blogsystem:latest .
+        run: docker build -t 211020/${{ env.IMAGE_NAME }}:latest .
 
       - name: Push Docker image to Docker Hub
         run: docker push 211020/blogsystem:latest
