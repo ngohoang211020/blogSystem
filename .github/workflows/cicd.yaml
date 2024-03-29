@@ -53,7 +53,7 @@ jobs:
           chmod 600 key.pem
       - name: Deployment
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ${{ secrets.BLOGSYSTEM_USERNAME }}@${{ secrets.BLOGSYSTEM_IP }} 'cd blogSystem'
+          ssh -o StrictHostKeyChecking=no -i key.pem ${{ secrets.BLOGSYSTEM_USERNAME }}@${{ secrets.BLOGSYSTEM_IP }} 'cd blogSystem && docker-compose up -d'
 
       - name: Deployment completed Successfully
         run: echo "Deployment completed successfuly"
