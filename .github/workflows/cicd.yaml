@@ -1,0 +1,43 @@
+name: CI/CD Blog System Workflow
+on:
+  pull_request:
+    branches: master_test_ci_cd
+    paths:
+      - 'src/**'
+      - '.github/workflows/**'
+  push:
+    branches: master_test_ci_cd
+    paths:
+      - 'src/**'
+      - '.github/workflows/**'
+
+jobs:
+  deployment:
+    name: Build docker image and deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+            java-version: '17'
+
+      - name: Set up Maven
+        uses: actions/setup-java@v2
+        with:
+            java-version: '11' # Maven 3.6.3 requires JDK 11 or newer
+            # Download and install Maven 3.6.3
+            run: |
+              mkdir -p ~/tools
+              curl -fsSL -o ~/tools/apache-maven-3.6.3-bin.tar.gz https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
+              tar -xzf ~/tools/apache-maven-3.6.3-bin.tar.gz -C ~/tools
+              echo 'export PATH=$HOME/tools/apache-maven-3.6.3/bin:$PATH' >> ~/.bashrc
+              source ~/.bashrc
+
+      - name: Check Java version
+        run: java -version
+
+      - name: Check Maven version
+        run: mvn -version

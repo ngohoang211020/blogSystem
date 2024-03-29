@@ -32,9 +32,9 @@ public class OpenAPIConfig {
                                                 .scheme("bearer")
                                                 .bearerFormat("JWT")
                                 )
-                ).addServersItem(new Server().url("https://api-blogsystem.com")
+                ).addServersItem(new Server().url("https://api.blogsystem.site")
                         .description("Blog System API"))
-                .addServersItem(new Server().url("https://blogsystem.com")
+                .addServersItem(new Server().url("https://blogsystem.site")
                         .description("Blog System WEB"));
     }
 
