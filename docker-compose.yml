@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  blog-system-api:
+    image: blogsystem:latest
+    container_name: api-blog-system
+    environment:
+      spring.data.redis.host: 8080
+      spring.data.redis.password: blogsystem123
+      spring.datasource.url: jdbc:postgresql://54.179.176.126:5432/blogsystem
+      spring.datasource.password: blogsystem123
+      spring.mail.password: eati ztmf izpz hres
+      spring.mail.username: hoanggg2110@gmail.com
+      spring.mail.default-sender: hoanggg2110@gmail.com
+    ports:
+      - "8080"
+    network_mode: host
+networks:
+  blog-system-api:
+    driver: bridge
