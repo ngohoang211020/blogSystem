@@ -19,25 +19,22 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Set up JDK 17
+      - name: Setup Java
         uses: actions/setup-java@v2
         with:
-            java-version: '17'
+            java-version: 17
+            distribution: 'adopt'
 
       - name: Set up Maven
-        uses: actions/setup-java@v2
+        uses: stCarolas/setup-maven@v5
         with:
-            java-version: '11' # Maven 3.6.3 requires JDK 11 or newer
-            # Download and install Maven 3.6.3
-            run: |
-              mkdir -p ~/tools
-              curl -fsSL -o ~/tools/apache-maven-3.6.3-bin.tar.gz https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
-              tar -xzf ~/tools/apache-maven-3.6.3-bin.tar.gz -C ~/tools
-              echo 'export PATH=$HOME/tools/apache-maven-3.6.3/bin:$PATH' >> ~/.bashrc
-              source ~/.bashrc
+          maven-version: 3.8.2
 
       - name: Check Java version
         run: java -version
 
       - name: Check Maven version
         run: mvn -version
+
+      - name: Build Jar file
+        run: mvn clean install -Dmaven.test.skip=true -P local
