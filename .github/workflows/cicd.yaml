@@ -47,3 +47,18 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: docker push 211020/blogsystem:latest
+
+      - name: Install SSH client
+        run: sudo apt-get install openssh-client
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.BLOGSYSTEM_PRTIVATE_KEY }}
+
+      - name: SSH into AWS Lightsail
+        run: |
+           ssh -o StrictHostKeyChecking=no -i ${{ secrets.BLOGSYSTEM_PRTIVATE_KEY }} ubuntu@54.255.101.71 << EOF
+             cd /blogSystem
+             docker-compose up -d
+           EOF
