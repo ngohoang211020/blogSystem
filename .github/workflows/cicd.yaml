@@ -47,9 +47,12 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: docker push ${{ secrets.DOCKER_USERNAME }}/blogsystem:latest
 
-      - name: Set permissions for private key
+      - name: Create temporary file
+        run: echo "${{ secrets.BLOGSYSTEM_PRTIVATE_KEY }}" > temp.txt
+
+      - name: Create PEM file
         run: |
-          echo "${{ secrets.BLOGSYSTEM_PRTIVATE_KEY }}" > key.pem
+          cat temp.txt > key.pem
           chmod 600 key.pem
 
       - name: Pull Docker image
