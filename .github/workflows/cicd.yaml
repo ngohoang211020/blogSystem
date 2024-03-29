@@ -51,9 +51,15 @@ jobs:
         run: |
           echo "${{ secrets.BLOGSYSTEM_PRTIVATE_KEY }}" > key.pem
           chmod 600 key.pem
-      - name: Deployment
-        run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ${{ secrets.BLOGSYSTEM_USERNAME }}@${{ secrets.BLOGSYSTEM_IP }} 'cd blogSystem && docker-compose up -d'
 
-      - name: Deployment completed Successfully
-        run: echo "Deployment completed successfuly"
+      - name: Pull Docker image
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@54.255.101.71 'sudo docker pull 211020/blogsystem:latest'
+
+      - name: Stop running container
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@54.255.101.71 'sudo docker stop blogsystem || true'
+          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@54.255.101.71 'sudo docker rm blogsystem || true'
+      - name: Run new container
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@54.255.101.71 'sudo docker run -d --name blogsystem -p 80:3000 211020/blogsystem:latest'
