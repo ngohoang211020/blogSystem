@@ -48,7 +48,7 @@ jobs:
         run: docker push ${{ secrets.DOCKER_USERNAME }}/blogsystem:latest
 
       - name: Create temporary file
-        run: echo "${{ secrets.BLOGSYSTEM_PRTIVATE_KEY }}" > temp.txt
+        run: echo ${{ secrets.BLOGSYSTEM_PRTIVATE_KEY }} > temp.txt
 
       - name: Create PEM file
         run: |
