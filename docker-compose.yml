@@ -3,6 +3,7 @@ services:
   blog-system-api:
     image: blogsystem:latest
     container_name: api-blog-system
+    restart: unless-stopped
     environment:
       spring.data.redis.host: 8080
       spring.data.redis.password: blogsystem123
@@ -12,7 +13,7 @@ services:
       spring.mail.username: hoanggg2110@gmail.com
       spring.mail.default-sender: hoanggg2110@gmail.com
     ports:
-      - "8080"
+      - "8080:8080"
     network_mode: host
 networks:
   blog-system-api:
