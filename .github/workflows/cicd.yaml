@@ -14,7 +14,7 @@ env:
   DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKERHUB_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
   AWS_PRIVATE_KEY: ${{ secrets.BLOGSYSTEM_PRTIVATE_KEY }}
-  AWS_IP: ${{ secrets.BLOGSYSTEM_PRTIVATE_KEY }}
+  AWS_IP: ${{ secrets.BLOGSYSTEM_IP }}
   AWS_USERNAME: ${{ secrets.BLOGSYSTEM_USERNAME }}
   IMAGE_NAME: 'blogsystem'
 jobs:
