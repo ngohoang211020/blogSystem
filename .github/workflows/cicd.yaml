@@ -67,5 +67,6 @@ jobs:
           SERVER_HOST: "54.255.101.71"
           SERVER_USER: "ubuntu"
         run: |
+          chmod +x ./deploy.sh
           set -e
           ./deploy.sh
