@@ -1,15 +1,14 @@
 package com.blogsystem.controller.auth;
 
-import com.blogsystem.common.constant.BlogSystemErrorCode;
 import com.blogsystem.common.response.APIResponse;
 import com.blogsystem.dto.auth.*;
+import com.blogsystem.enums.ServiceErrorDesc;
 import com.blogsystem.service.AccountService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.tags.Tags;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +37,7 @@ public class AccountController {
             registerAccountRequest.setProfilePicture(profilePicture);
             registerResp = accountService.register(registerAccountRequest);
         } catch (JsonProcessingException e){
-            registerResp.setCode(BlogSystemErrorCode.ERROR_BAD_REQUEST_CODE);
+            registerResp.setCode(ServiceErrorDesc.BAD_FORMAT.getVal());
         }
         return new APIResponse<>(registerResp, HttpStatus.OK);
     }

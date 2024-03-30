@@ -5,9 +5,9 @@ import com.blogsystem.cloudinary.CloudinarySubPath;
 import com.blogsystem.cloudinary.CloudinaryUtil;
 import com.blogsystem.cloudinary.dto.AccountPictureUtil;
 import com.blogsystem.common.constant.BlogSystemConstant;
-import com.blogsystem.common.constant.BlogSystemErrorCode;
 import com.blogsystem.dto.auth.*;
 import com.blogsystem.entity.UserEntity;
+import com.blogsystem.enums.ServiceErrorDesc;
 import com.blogsystem.enums.StatusType;
 import com.blogsystem.exception.ObjectNotFoundException;
 import com.blogsystem.pubsub.event.OTPRegistrationEmailEvent;
@@ -85,7 +85,7 @@ public class AccountServiceImpl implements AccountService {
         var currentUserResp = new CurrentUserResponse();
         var user = CurrentUserUtils.getCurrentUser();
         if (user == null) {
-            currentUserResp.setCode(BlogSystemErrorCode.USER_NOT_FOUND);
+            currentUserResp.setCode(ServiceErrorDesc.USER_NOT_FOUND.getVal());
             return currentUserResp;
         }
         var userEntity = userRepository.findByUsername(user.getName()).orElseThrow(

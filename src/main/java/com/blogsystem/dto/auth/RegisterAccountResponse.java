@@ -1,6 +1,5 @@
 package com.blogsystem.dto.auth;
 
-import com.blogsystem.common.constant.BlogSystemErrorCode;
 import com.blogsystem.dto.BaseResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

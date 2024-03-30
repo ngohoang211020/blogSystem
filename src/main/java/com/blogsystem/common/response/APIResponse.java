@@ -1,6 +1,5 @@
 package com.blogsystem.common.response;
 
-import com.blogsystem.common.constant.BlogSystemErrorCode;
 import com.blogsystem.dto.BaseResponse;
 import lombok.Builder;
 import lombok.Getter;

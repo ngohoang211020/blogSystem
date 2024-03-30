@@ -1,19 +1,14 @@
 package com.blogsystem.service.impl;
 
-import com.blogsystem.cloudinary.dto.AccountPictureUtil;
-import com.blogsystem.common.constant.BlogSystemErrorCode;
-import com.blogsystem.dto.auth.CurrentUserResponse;
 import com.blogsystem.dto.auth.LoginRequest;
 import com.blogsystem.dto.auth.LoginResponse;
 import com.blogsystem.enums.TokenType;
 import com.blogsystem.repository.UserRepository;
 import com.blogsystem.security.service.TokenProvider;
-import com.blogsystem.security.util.CurrentUserUtils;
 import com.blogsystem.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
