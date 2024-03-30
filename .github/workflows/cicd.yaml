@@ -73,18 +73,19 @@ jobs:
           chmod +x ./deploy.sh
           set -e
           ./deploy.sh
+  slack-notification:
+    name: Slack Notification When deployment is fail
+    runs-on: ubuntu-latest
+    needs:
+      - deployment
+    steps:
+      - uses: rtCamp/action-slack-notify@v2
 
-      - name: Slack Notification
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_CHANNEL: blog-system
-          SLACK_COLOR: ${{ job.status }}
-          SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_MESSAGE: ${{ github.event.head_commit.message }}
-          SLACK_TITLE: Commit Message
-          SLACK_USERNAME: rtCamp
-          SLACK_WEBHOOK: ${{ secrets.SLACK_NOTIFICATIONS_TOKEN  }}
+      - name: Report Status
         if: always()
-#          channel-id: 'C06RNANG3RV' # slack channel #alerts-test
-
-
+        uses: ravsamhq/notify-slack-action@v1
+        with:
+          status: ${{ job.status }}
+          notify_when: 'failure'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_NOTIFICATIONS_TOKEN }}
