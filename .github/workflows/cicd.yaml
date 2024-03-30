@@ -54,4 +54,4 @@ jobs:
 
       - name: Start deployment with docker compose
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@54.255.101.71 'cd blogSystem && docker-compose up -d'
+          ssh -v -o StrictHostKeyChecking=no -i key.pem ubuntu@54.255.101.71 'cd blogSystem && docker-compose up -d'
