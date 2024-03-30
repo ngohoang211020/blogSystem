@@ -60,13 +60,13 @@ jobs:
 
       - name: Add Server Key
         run: |
-          echo "${{ secrets.BLOGSYSTEM_PRTIVATE_KEY }}" > key.pem
+          echo "${{ secrets.AWS_PRIVATE_KEY }}" > key.pem
           chmod 600 key.pem
 
       - name: Deploy the application
         env:
-          SERVER_HOST: "54.255.101.71"
-          SERVER_USER: "ubuntu"
+          SERVER_HOST: ${{ secrets.AWS_HOST }}
+          SERVER_USER: ${{ secrets.AWS_USERNAME }}
         run: |
           chmod +x ./deploy.sh
           set -e
