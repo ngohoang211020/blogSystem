@@ -1,7 +1,15 @@
 # Blog System Project
 
-This project is a blog system developed using Maven, Spring Boot, Java, PostgreSQL, Redis, Cloudinary, STMP and Flyway. The blog system provides a platform for users to post articles, share thoughts, and engage in discussions.
-
+This project is a blog system developed using 
+- Maven 3.8.1
+- Java 17
+- Spring Framework (Security, Data Jpa, Scheduling Task, application event)
+- Redis
+- Google API for SMTP
+- Cloudinary for file storage
+- Github Action for CI/CD
+- Docker && Docker Compose for deployment
+- Flyway for migrating database
 ## Features
 
 - User Authentication: Users can register, login, and logout securely.
