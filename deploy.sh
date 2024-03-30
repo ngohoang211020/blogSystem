@@ -5,7 +5,8 @@ start=$(date +"%s")
 ssh ${SERVER_USER}@${SERVER_HOST} -i key.pem -t -t -o StrictHostKeyChecking=no << 'ENDSSH'
 cd blogSystem
 git pull
-docker-compose restart
+docker-compose stop
+docker-compose up -d
 exit
 ENDSSH
 
