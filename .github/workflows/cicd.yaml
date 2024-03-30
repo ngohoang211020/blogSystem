@@ -6,7 +6,9 @@ on:
       - 'src/**'
       - '.github/workflows/**'
   push:
-    branches: master_test_ci_cd
+    branches:
+      - master_test_ci_cd
+      - master
     paths:
       - 'src/**'
       - '.github/workflows/**'
