@@ -2,6 +2,8 @@
 
 start=$(date +"%s")
 
+cat key.pem
+
 ssh ${SERVER_USER}@${SERVER_HOST} -i key.pem -t -t -o StrictHostKeyChecking=no << 'ENDSSH'
 cd blogSystem
 
