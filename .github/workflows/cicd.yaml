@@ -78,7 +78,7 @@ jobs:
       - deployment
     steps:
       - name: Post to a Slack channel
-        uses: slackapi/slack-github-action@v1.25.0
+        uses: rtCamp/action-slack-notify@v2
         id: slack
         with:
           # Slack channel id, channel name, or user id to post message.

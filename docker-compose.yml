@@ -13,5 +13,7 @@ services:
       spring.mail.password: fczw lwes bdph sctm
       spring.mail.username: blogsystem2110@gmail.com
       spring.mail.default-sender: blogsystem2110@gmail.com
+      cloudinary.key: 117784362653246
+      cloudinary.secret-key: XfcUsfz7LK7cdjj7Q5rf6BrxCEo
     ports:
       - "8080:8080"
