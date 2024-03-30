@@ -1,6 +1,7 @@
 package com.blogsystem.dto.auth;
 
 import com.blogsystem.dto.BaseResponse;
+import com.blogsystem.enums.ServiceErrorDesc;
 import com.blogsystem.enums.TokenType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -23,7 +24,7 @@ public class LoginResponse extends BaseResponse {
     }
 
     public LoginResponse( String accessToken, String refreshToken, TokenType tokenType) {
-        super(BlogSystemErrorCode.SUCCESS_CODE);
+        super(ServiceErrorDesc.SUCCESS.getVal());
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
         this.tokenType = tokenType;

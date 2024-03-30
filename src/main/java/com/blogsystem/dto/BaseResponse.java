@@ -1,5 +1,6 @@
 package com.blogsystem.dto;
 
+import com.blogsystem.enums.ServiceErrorDesc;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -20,6 +21,6 @@ public abstract class BaseResponse implements Serializable {
     }
 
     public BaseResponse() {
-        this.code= BlogSystemErrorCode.SUCCESS_CODE;
+        this.code= ServiceErrorDesc.SUCCESS.getVal();
     }
 }

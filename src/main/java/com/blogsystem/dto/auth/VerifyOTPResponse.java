@@ -1,6 +1,7 @@
 package com.blogsystem.dto.auth;
 
 import com.blogsystem.dto.BaseResponse;
+import com.blogsystem.enums.ServiceErrorDesc;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,7 +18,7 @@ public class VerifyOTPResponse extends BaseResponse {
     }
 
     public VerifyOTPResponse(boolean verified) {
-        super(BlogSystemErrorCode.SUCCESS_CODE);
+        super(ServiceErrorDesc.SUCCESS.getVal());
         this.verified = verified;
     }
 }

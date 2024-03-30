@@ -1,6 +1,7 @@
 package com.blogsystem.common.response;
 
 import com.blogsystem.dto.BaseResponse;
+import com.blogsystem.enums.ServiceErrorDesc;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +12,7 @@ import org.springframework.util.MultiValueMap;
 public class APIResponse<T extends BaseResponse> extends ResponseEntity {
 
     public APIResponse(HttpStatus status) {
-        this(APIBody.builder().code(BlogSystemErrorCode.SUCCESS_CODE).build(), null, status);
+        this(APIBody.builder().code(ServiceErrorDesc.SUCCESS.getVal()).build(), null, status);
     }
 
     public APIResponse(T body, HttpStatus status) {
