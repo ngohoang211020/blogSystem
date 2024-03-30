@@ -10,6 +10,7 @@ on:
     paths:
       - 'src/**'
       - '.github/workflows/**'
+      - 'deploy.sh'
 jobs:
   build:
     name: Docker build and push
