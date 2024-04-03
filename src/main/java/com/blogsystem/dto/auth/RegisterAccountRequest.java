@@ -12,24 +12,17 @@ import org.springframework.web.multipart.MultipartFile;
 @Setter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class RegisterAccountRequest {
-    @Email
     private String email;
 
-    @NotBlank
     private String fullName;
 
-    @NotBlank
     private String password;
 
-    @NotBlank
     private String confirmPassword;
 
-    @NotBlank
     private String phoneNumber;
 
-    @NotBlank
     private String username;
 
-    @NotBlank
-    private MultipartFile profilePicture;
+    private String profilePicture;
 }

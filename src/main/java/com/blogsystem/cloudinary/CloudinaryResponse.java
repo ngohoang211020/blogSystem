@@ -9,4 +9,5 @@ import lombok.NoArgsConstructor;
 public class CloudinaryResponse {
     private String url;
     private String publicId;
+    private String fileName;
 }

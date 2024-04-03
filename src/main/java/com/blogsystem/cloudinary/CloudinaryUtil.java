@@ -53,6 +53,7 @@ public class CloudinaryUtil {
         var cloudinaryResp = new CloudinaryResponse();
         cloudinaryResp.setUrl((String) uploadMapResp.getOrDefault("url", ""));
         cloudinaryResp.setPublicId((String) uploadMapResp.getOrDefault("public_id", ""));
+        cloudinaryResp.setFileName((String) uploadMapResp.getOrDefault("",""));
         return cloudinaryResp;
     }
 }

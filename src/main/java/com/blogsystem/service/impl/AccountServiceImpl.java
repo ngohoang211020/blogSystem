@@ -32,30 +32,24 @@ public class AccountServiceImpl implements AccountService {
     private final PasswordEncoder passwordEncoder;
     private final EmailPublisher emailPublisher;
     private final CacheUtil cacheUtil;
-    private final CloudinaryUtil cloudinaryUtil;
     private final AccountPictureUtil accountPictureUtil;
 
     @Transactional
     @Override
     public RegisterAccountResponse register(RegisterAccountRequest request) throws IOException {
         var user = buildUser(request);
-
-        var profilePictureFile = request.getProfilePicture();
-        user.setProfilePicture(profilePictureFile.getOriginalFilename());
         user = userRepository.save(user);
-
-        var uploadResp = cloudinaryUtil.uploadImage(
-                CloudinarySubPath.ACCOUNT.content,
-                FileUtil.getFilenameWithoutExtension(profilePictureFile.getOriginalFilename()),
-                profilePictureFile.getBytes());
 
         var otp = OTPUtil.generateOTP();
         cacheUtil.saveOTPRegistration(user.getEmail(), otp);
 
         var otpEvent = buildRegistrationEvent(user,otp);
-        otpEvent.setProfilePicture(uploadResp.getUrl());
+
+        var profilePictureUrl = accountPictureUtil.presign(user.getProfilePicture());
+        otpEvent.setProfilePicture(profilePictureUrl);
         emailPublisher.publishSendEmailEvent(otpEvent);
-        return new RegisterAccountResponse(user.getEmail(), user.getUserId(),uploadResp.getUrl());
+
+        return new RegisterAccountResponse(user.getEmail(), user.getUserId(),profilePictureUrl);
     }
 
     @Transactional
@@ -109,6 +103,7 @@ public class AccountServiceImpl implements AccountService {
         user.setFullName(request.getFullName());
         user.setUsername(request.getUsername());
         user.setPhoneNumber(request.getPhoneNumber());
+        user.setProfilePicture(request.getProfilePicture());
         return user;
     }
     private OTPRegistrationEmailEvent buildRegistrationEvent(UserEntity user, String otp){

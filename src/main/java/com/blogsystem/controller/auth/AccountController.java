@@ -7,12 +7,10 @@ import com.blogsystem.service.AccountService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -25,20 +23,11 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class AccountController {
     private final AccountService accountService;
-    private final ObjectMapper objectMapper;
 
     @Operation(summary = "Register account")
-    @Parameter()
     @PostMapping
-    public APIResponse<RegisterAccountResponse> register(@RequestParam("registerBody") String request, @RequestParam("profilePicture")MultipartFile profilePicture ) throws IOException {
-        var registerResp = new RegisterAccountResponse();
-        try {
-            var registerAccountRequest = objectMapper.readValue(request,RegisterAccountRequest.class);
-            registerAccountRequest.setProfilePicture(profilePicture);
-            registerResp = accountService.register(registerAccountRequest);
-        } catch (JsonProcessingException e){
-            registerResp.setCode(ServiceErrorDesc.BAD_FORMAT.getVal());
-        }
+    public APIResponse<RegisterAccountResponse> register(@RequestBody RegisterAccountRequest registerAccountRequest) throws IOException {
+        var registerResp = accountService.register(registerAccountRequest);
         return new APIResponse<>(registerResp, HttpStatus.OK);
     }
 
@@ -46,7 +35,7 @@ public class AccountController {
     @PutMapping("/verify-otp")
     public APIResponse<VerifyOTPResponse> verifyOTP(@RequestBody VerifyOTPRequest request) {
         var verifyResp = accountService.verifyOTP(request);
-        return new APIResponse<>(verifyResp,HttpStatus.OK);
+        return new APIResponse<>(verifyResp, HttpStatus.OK);
     }
 
     @Operation(summary = "Get logged user information")

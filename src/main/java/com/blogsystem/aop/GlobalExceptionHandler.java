@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = {ObjectNotFoundException.class})
-    protected ResponseEntity<APIResponseError> handleObjectNotFoundException(AccessDeniedException e) {
+    protected ResponseEntity<APIResponseError> handleObjectNotFoundException(ObjectNotFoundException e) {
         log.error("[Message]: " + e.getMessage());
         var apiResponseError = APIResponseError.builder()
                 .code(ServiceErrorDesc.RESOURCE_NOT_FOUND.getVal())
