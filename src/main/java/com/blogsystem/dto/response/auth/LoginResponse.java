@@ -1,6 +1,6 @@
-package com.blogsystem.dto.auth;
+package com.blogsystem.dto.response.auth;
 
-import com.blogsystem.dto.BaseResponse;
+import com.blogsystem.dto.response.BaseResponse;
 import com.blogsystem.enums.ServiceErrorDesc;
 import com.blogsystem.enums.TokenType;
 import jakarta.persistence.EnumType;

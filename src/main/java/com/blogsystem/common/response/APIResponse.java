@@ -1,6 +1,6 @@
 package com.blogsystem.common.response;
 
-import com.blogsystem.dto.BaseResponse;
+import com.blogsystem.dto.response.BaseResponse;
 import com.blogsystem.enums.ServiceErrorDesc;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,8 +1,7 @@
-package com.blogsystem.dto.file;
+package com.blogsystem.dto.response.file;
 
-import com.blogsystem.dto.BaseResponse;
+import com.blogsystem.dto.response.BaseResponse;
 import com.blogsystem.enums.ServiceErrorDesc;
-import com.blogsystem.enums.TokenType;
 import lombok.Getter;
 import lombok.Setter;
 

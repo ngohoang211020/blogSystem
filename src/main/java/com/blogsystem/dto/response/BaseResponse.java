@@ -1,4 +1,4 @@
-package com.blogsystem.dto;
+package com.blogsystem.dto.response;
 
 import com.blogsystem.enums.ServiceErrorDesc;
 import com.fasterxml.jackson.annotation.JsonIgnore;

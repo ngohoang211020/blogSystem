@@ -1,7 +1,7 @@
 package com.blogsystem.service.impl;
 
-import com.blogsystem.dto.auth.LoginRequest;
-import com.blogsystem.dto.auth.LoginResponse;
+import com.blogsystem.dto.request.auth.LoginRequest;
+import com.blogsystem.dto.response.auth.LoginResponse;
 import com.blogsystem.enums.TokenType;
 import com.blogsystem.repository.UserRepository;
 import com.blogsystem.security.service.TokenProvider;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 public class AuthServiceImpl implements AuthService {
     private final TokenProvider tokenProvider;
     private final AuthenticationManager authenticationManager;
-    private final UserRepository userRepository;
     @Override
     public LoginResponse login(LoginRequest loginRequest) {
         var user = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));

@@ -1,15 +1,18 @@
 package com.blogsystem.controller.auth;
 
 import com.blogsystem.common.response.APIResponse;
-import com.blogsystem.dto.auth.*;
-import com.blogsystem.enums.ServiceErrorDesc;
+import com.blogsystem.dto.request.auth.RegisterAccountRequest;
+import com.blogsystem.dto.request.auth.VerifyOTPRequest;
+import com.blogsystem.dto.response.auth.CurrentUserResponse;
+import com.blogsystem.dto.response.auth.RegisterAccountResponse;
+import com.blogsystem.dto.response.auth.VerifyOTPResponse;
 import com.blogsystem.service.AccountService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -26,7 +29,7 @@ public class AccountController {
 
     @Operation(summary = "Register account")
     @PostMapping
-    public APIResponse<RegisterAccountResponse> register(@RequestBody RegisterAccountRequest registerAccountRequest) throws IOException {
+    public APIResponse<RegisterAccountResponse> register(@Valid @RequestBody RegisterAccountRequest registerAccountRequest, BindingResult bindingResult) throws IOException {
         var registerResp = accountService.register(registerAccountRequest);
         return new APIResponse<>(registerResp, HttpStatus.OK);
     }

@@ -24,7 +24,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationEntryPo
     private final ObjectMapper objectMapper;
 
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
         response.setContentType("application/json");
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
 
@@ -36,6 +36,6 @@ public class CustomAuthenticationFailureHandler implements AuthenticationEntryPo
                 .error(ServiceErrorDesc.UNAUTHORIZED_CODE.getDesc())
                 .build();
 
-        response.getOutputStream().println(objectMapper.writeValueAsString(apiResponseError));
+        response.getWriter().write(objectMapper.writeValueAsString(apiResponseError));
     }
 }

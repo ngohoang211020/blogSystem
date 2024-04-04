@@ -1,11 +1,13 @@
 package com.blogsystem.service.impl;
 
 import com.blogsystem.cache.CacheUtil;
-import com.blogsystem.cloudinary.CloudinarySubPath;
-import com.blogsystem.cloudinary.CloudinaryUtil;
 import com.blogsystem.cloudinary.dto.AccountPictureUtil;
 import com.blogsystem.common.constant.BlogSystemConstant;
-import com.blogsystem.dto.auth.*;
+import com.blogsystem.dto.request.auth.RegisterAccountRequest;
+import com.blogsystem.dto.request.auth.VerifyOTPRequest;
+import com.blogsystem.dto.response.auth.CurrentUserResponse;
+import com.blogsystem.dto.response.auth.RegisterAccountResponse;
+import com.blogsystem.dto.response.auth.VerifyOTPResponse;
 import com.blogsystem.entity.UserEntity;
 import com.blogsystem.enums.ServiceErrorDesc;
 import com.blogsystem.enums.StatusType;
@@ -15,13 +17,12 @@ import com.blogsystem.pubsub.publisher.EmailPublisher;
 import com.blogsystem.repository.UserRepository;
 import com.blogsystem.security.util.CurrentUserUtils;
 import com.blogsystem.service.AccountService;
-import com.blogsystem.util.FileUtil;
 import com.blogsystem.util.OTPUtil;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 
@@ -43,13 +44,13 @@ public class AccountServiceImpl implements AccountService {
         var otp = OTPUtil.generateOTP();
         cacheUtil.saveOTPRegistration(user.getEmail(), otp);
 
-        var otpEvent = buildRegistrationEvent(user,otp);
+        var otpEvent = buildRegistrationEvent(user, otp);
 
         var profilePictureUrl = accountPictureUtil.presign(user.getProfilePicture());
         otpEvent.setProfilePicture(profilePictureUrl);
         emailPublisher.publishSendEmailEvent(otpEvent);
 
-        return new RegisterAccountResponse(user.getEmail(), user.getUserId(),profilePictureUrl);
+        return new RegisterAccountResponse(user.getEmail(), user.getUserId(), profilePictureUrl);
     }
 
     @Transactional
@@ -62,7 +63,7 @@ public class AccountServiceImpl implements AccountService {
         var providedOTP = verifyOTPRequest.getOtp();
         var cachedOTP = cacheUtil.getOTPRegistration(user.getEmail());
         var verifyOTPResp = new VerifyOTPResponse();
-        if(cachedOTP.isBlank()||cachedOTP.isEmpty()||!cachedOTP.equals(providedOTP)){
+        if (cachedOTP.isBlank() || cachedOTP.isEmpty() || !cachedOTP.equals(providedOTP)) {
             verifyOTPResp.setVerified(false);
         } else {
             verifyOTPResp.setVerified(true);
@@ -106,7 +107,8 @@ public class AccountServiceImpl implements AccountService {
         user.setProfilePicture(request.getProfilePicture());
         return user;
     }
-    private OTPRegistrationEmailEvent buildRegistrationEvent(UserEntity user, String otp){
+
+    private OTPRegistrationEmailEvent buildRegistrationEvent(UserEntity user, String otp) {
         var otpEvent = new OTPRegistrationEmailEvent(this);
         otpEvent.setOtp(otp);
         otpEvent.setDuration(BlogSystemConstant.REGISTRATION_OTP_DURATION_MINUTES);
