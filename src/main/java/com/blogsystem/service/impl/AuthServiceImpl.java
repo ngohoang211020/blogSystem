@@ -3,7 +3,6 @@ package com.blogsystem.service.impl;
 import com.blogsystem.dto.request.auth.LoginRequest;
 import com.blogsystem.dto.response.auth.LoginResponse;
 import com.blogsystem.enums.TokenType;
-import com.blogsystem.repository.UserRepository;
 import com.blogsystem.security.service.TokenProvider;
 import com.blogsystem.service.AuthService;
 import lombok.RequiredArgsConstructor;

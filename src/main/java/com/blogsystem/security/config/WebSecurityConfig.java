@@ -1,6 +1,7 @@
 package com.blogsystem.security.config;
 
 import com.blogsystem.security.filter.JwtAuthorizationFilter;
+import com.blogsystem.security.filter.RateLimitFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static com.blogsystem.security.constants.SecurityConstants.SYSTEM_WHITELIST;
 
@@ -32,7 +34,7 @@ public class WebSecurityConfig {
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
     private final AuthenticationEntryPoint unauthorizedHandler;
     private final AccessDeniedHandler accessDeniedHandler;
-
+    private final RateLimitFilter rateLimitFilter;
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -43,7 +45,10 @@ public class WebSecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         var configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Collections.singletonList(CorsConfiguration.ALL));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Origin", "Content-Type", "Accept"));
+        configuration.setExposedHeaders(Arrays.asList("Content-Type", "X-Rate-Limit-Retry-After-Seconds", "X-Rate-Limit-Remaining"));
+
         var source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
@@ -56,7 +61,7 @@ public class WebSecurityConfig {
                 // giving permission to every request for /login endpoint
                 .authorizeHttpRequests(
                         authorize -> authorize
-                                .requestMatchers(SYSTEM_WHITELIST).permitAll()
+                                .requestMatchers(SYSTEM_WHITELIST.toArray(String[]::new)).permitAll()
                                 // for everything else, the user has to be authenticated
                                 .anyRequest().authenticated()
                 )
@@ -67,6 +72,7 @@ public class WebSecurityConfig {
                         .authenticationEntryPoint(unauthorizedHandler))
                 // adding the custom filter before UsernamePasswordAuthenticationFilter in the filter chain
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(rateLimitFilter, JwtAuthorizationFilter.class)
                 // setting stateless session, because we choose to implement Rest API
                 .sessionManagement(s -> s
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));

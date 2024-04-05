@@ -1,4 +1,4 @@
-package com.blogsystem.security.service.impl;
+package com.blogsystem.security.service;
 
 import com.blogsystem.entity.UserEntity;
 import com.blogsystem.repository.RoleRepository;

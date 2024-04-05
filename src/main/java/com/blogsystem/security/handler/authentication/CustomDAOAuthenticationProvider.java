@@ -1,6 +1,6 @@
 package com.blogsystem.security.handler.authentication;
 
-import com.blogsystem.security.service.impl.UserDetailsServiceImpl;
+import com.blogsystem.security.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;

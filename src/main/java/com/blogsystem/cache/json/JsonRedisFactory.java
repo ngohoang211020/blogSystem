@@ -13,6 +13,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
@@ -28,7 +29,11 @@ public class JsonRedisFactory {
         this.connectionFactory = connectionFactory;
         this.objectMapper = objectMapper;
     }
-
+    public Set<String> getAllKeys(String key) {
+        var template = getRedisTemplate(Set.class);
+        logger.info("Get all keys by pattern [{}]", key);
+        return template.keys(key);
+    }
     public <T> void put(String key, T data, Duration expiration) {
         if (data == null) {
             logger.warn("No data was given. Cancelling cache for key [{}]", key);
@@ -38,6 +43,18 @@ public class JsonRedisFactory {
         var template = getRedisTemplate(data.getClass());
 
         template.opsForValue().set(key, data, expiration);
+        logger.info("Inserted/Updated cache entry for key [{}]", key);
+    }
+
+    public <T> void put(String key, T data) {
+        if (data == null) {
+            logger.warn("No data was given. Cancelling cache for key [{}]", key);
+            return;
+        }
+
+        var template = getRedisTemplate(data.getClass());
+
+        template.opsForValue().set(key, data);
         logger.info("Inserted/Updated cache entry for key [{}]", key);
     }
 

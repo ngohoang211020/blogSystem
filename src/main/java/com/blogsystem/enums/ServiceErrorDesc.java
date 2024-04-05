@@ -14,7 +14,10 @@ public enum ServiceErrorDesc {
     UNAUTHORIZED_CODE(8, "Account is still unauthenticated", ""),
     FORBIDDEN_CODE(9, "Don't have permission to access this resource", ""),
     USER_NOT_FOUND(10, "Không tìm thấy người dùng", ""),
-    RESOURCE_NOT_FOUND(10, "Not found this resource", "")
+    RESOURCE_NOT_FOUND(11, "Not found this resource", ""),
+    NOT_IMPLEMENTED(12, "Something went wrong, unknown error", ""),
+    OVER_RATE_LIMIT(13, "Rate limit exceed", "")
+
     ;
     private final String desc;
     private final int val;
