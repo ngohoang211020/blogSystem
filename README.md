@@ -4,7 +4,7 @@ This project is a blog system developed using
 - Maven 3.8.1
 - Java 17
 - Spring Framework (Security, Data Jpa, Scheduling Task, application event)
-- Redis
+- Redis for storing OTP and Rate Limit
 - Google API for SMTP
 - Cloudinary for file storage
 - Github Action for CI/CD
