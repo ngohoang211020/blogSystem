@@ -37,7 +37,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Transactional
     @Override
-    public RegisterAccountResponse register(RegisterAccountRequest request) throws IOException {
+    public RegisterAccountResponse register(RegisterAccountRequest request) {
         var user = buildUser(request);
         user = userRepository.save(user);
 

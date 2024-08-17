@@ -29,7 +29,7 @@ public class AccountController {
 
     @Operation(summary = "Register account")
     @PostMapping
-    public APIResponse<RegisterAccountResponse> register(@Valid @RequestBody RegisterAccountRequest registerAccountRequest, BindingResult bindingResult) throws IOException {
+    public APIResponse<RegisterAccountResponse> register(@Valid @RequestBody RegisterAccountRequest registerAccountRequest) throws IOException {
         var registerResp = accountService.register(registerAccountRequest);
         return new APIResponse<>(registerResp, HttpStatus.OK);
     }

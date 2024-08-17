@@ -101,19 +101,19 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
-    @ResponseBody
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(Exception.class)
-    public APIResponseError serverExceptionHandler(final Exception exception) {
-        logException(exception);
-
-        return APIResponseError.builder()
-                .code(ServiceErrorDesc.NOT_IMPLEMENTED.getVal())
-                .message(exception.getMessage())
-                .timestamp(new Date().getTime())
-                .error(ServiceErrorDesc.NOT_IMPLEMENTED.getDesc())
-                .build();
-    }
+//    @ResponseBody
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ExceptionHandler(Exception.class)
+//    public APIResponseError serverExceptionHandler(final Exception exception) {
+//        logException(exception);
+//
+//        return APIResponseError.builder()
+//                .code(ServiceErrorDesc.NOT_IMPLEMENTED.getVal())
+//                .message(exception.getMessage())
+//                .timestamp(new Date().getTime())
+//                .error(ServiceErrorDesc.NOT_IMPLEMENTED.getDesc())
+//                .build();
+//    }
     @ResponseBody
     @ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
     @ExceptionHandler(OverLimitedException.class)

@@ -31,7 +31,7 @@ public class JsonRedisFactory {
     }
     public Set<String> getAllKeys(String key) {
         var template = getRedisTemplate(Set.class);
-        logger.info("Get all keys by pattern [{}]", key);
+//        logger.info("Get all keys by pattern [{}]", key);
         return template.keys(key);
     }
     public <T> void put(String key, T data, Duration expiration) {
@@ -43,7 +43,7 @@ public class JsonRedisFactory {
         var template = getRedisTemplate(data.getClass());
 
         template.opsForValue().set(key, data, expiration);
-        logger.info("Inserted/Updated cache entry for key [{}]", key);
+//        logger.info("Inserted/Updated cache entry for key [{}]", key);
     }
 
     public <T> void put(String key, T data) {
@@ -55,7 +55,7 @@ public class JsonRedisFactory {
         var template = getRedisTemplate(data.getClass());
 
         template.opsForValue().set(key, data);
-        logger.info("Inserted/Updated cache entry for key [{}]", key);
+//        logger.info("Inserted/Updated cache entry for key [{}]", key);
     }
 
     public <T> void put(String key, List<T> items, Duration expiration) {
@@ -68,7 +68,7 @@ public class JsonRedisFactory {
 
         try {
             template.opsForValue().set(key, objectMapper.writeValueAsString(items), expiration);
-            logger.info("Inserted/Updated cache entry for key [{}]", key);
+//            logger.info("Inserted/Updated cache entry for key [{}]", key);
         } catch (JsonProcessingException e) {
             logger.error("Failed to cache list {} items for key [{}]. {}", items.get(0).getClass().getSimpleName(), key, e.getMessage());
         }
