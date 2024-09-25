@@ -12,7 +12,7 @@ pipeline {
         copyScript = "sudo cp target/${processName} ${folderDeploy}"
         permissionScript = "sudo chown -R ${appUser}. ${folderDeploy}"
         killScript = "sudo kill -9 \$(ps -ef| grep ${processName} | grep -v grep | awk '{print \$2}')"
-        runScript = 'sudo su ${appUser} -c "cd ${folderDeploy}; java -jar ${processName} > nohup.out 2>&1 &"'
+        runScript = 'sudo su ${appUser} -c "cd ${folderDeploy}; cloudinary.key=117784362653246 cloudinary.secret-key=XfcUsfz7LK7cdjj7Q5rf6BrxCEo java -jar ${processName} > nohup.out 2>&1 &"'
     }
     
     stages {
