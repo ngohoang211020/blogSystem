@@ -25,7 +25,7 @@ pipeline {
         }
         stage('build image and push to registry') {
             steps {
-                sh(script: """ ${buildScript}  """, label: "Build with maven")
+                sh(script: """ ${buildImageScript}  """, label: "Build with maven")
             }
         }
         stage('deploy') {
