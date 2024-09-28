@@ -6,10 +6,10 @@ services:
     container_name: blogsystem-api
     restart: unless-stopped
     environment:
-      spring.data.redis.host: 54.255.101.71
-      spring.data.redis.password: blogsystem123
-      spring.datasource.url: jdbc:postgresql://54.255.101.71:5432/blogsystem
-      spring.datasource.password: blogsystem123
+      spring.data.redis.host: localhost
+      spring.data.redis.password: 123456
+      spring.datasource.url: jdbc:postgresql://localhost:5432/blogsystem
+      spring.datasource.password: 123456
       spring.mail.password: fczw lwes bdph sctm
       spring.mail.username: blogsystem2110@gmail.com
       spring.mail.default-sender: blogsystem2110@gmail.com
