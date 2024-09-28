@@ -10,19 +10,24 @@ pipeline {
     IMAGE_TAG = "${APP_NAME}:${TAG_NAME}"
     PROCESS_NAME = "${APP_NAME}.${APP_TYPE}"
     PATH_PROJECT = "/datas/${APP_USER}"
-    BUILD_MAVEN_SCRIPT = "mvn clean install -DskipTests=true"
     DOCKER_HUB = "211020"
     DOCKERHUB_CREDENTIALS = credentials('docker-credentials')
   }
   stages {
+    stage('Checkout source') {
+      steps {
+        sh(script: """ sudo cp -r . $PATH_PROJECT """, label: "Copy .jar file into deploy folder")
+        sh(script: """ ${BUILD_MAVEN_SCRIPT}  """, label: "Build with maven")
+        sh(script: """ ${BUILD_MAVEN_SCRIPT}  """, label: "Build with maven")
+      }
+    }
     stage('build maven') {
       steps {
-        sh(script: """ ${BUILD_MAVEN_SCRIPT}  """, label: "Build with maven")
+        sh "  cd $PATH_PROJECT && mvn clean install -DskipTests=true"
       }
     }
     stage('build and push image') {
       steps {
-        sh(script: """ sudo cp . $PATH_PROJECT """, label: "Copy .jar file into deploy folder")
         sh "  docker build $PATH_PROJECT -t ${IMAGE_TAG} \
               && docker tag ${IMAGE_TAG} ${DOCKER_HUB}/${IMAGE_TAG} \
               && echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin \
