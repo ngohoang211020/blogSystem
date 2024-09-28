@@ -14,14 +14,10 @@ pipeline {
     DOCKERHUB_CREDENTIALS = credentials('docker-credentials')
   }
   stages {
-    stage('Checkout source') {
+    stage('Build Maven') {
       steps {
-        sh "  sudo cp -r . $PATH_PROJECT"
-      }
-    }
-    stage('build maven') {
-      steps {
-        sh "  sudo cd $PATH_PROJECT && mvn clean install -DskipTests=true"
+        sh "  mvn clean install -DskipTests=true \
+              && sudo cp -r . $PATH_PROJECT"
       }
     }
     stage('build and push image') {
