@@ -28,7 +28,7 @@ pipeline {
                && docker push ${IMAGE_TAG} \
                && docker rmi  ${IMAGE_TAG} \
                && docker pull ${IMAGE_TAG} \
-               && docker-compose up -d'"
+               && docker-compose -f ${PATH_PROJECT}/docker-compose.yml up -d'"
       }
     }
     stage('check log') {
