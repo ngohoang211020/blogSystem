@@ -16,7 +16,7 @@ pipeline {
   stages {
     stage('Checkout source') {
       steps {
-        sh(script: """ sudo cp -r . $PATH_PROJECT """, label: "Copy .jar file into deploy folder")
+        sh "  sudo cp -r . $PATH_PROJECT"
       }
     }
     stage('build maven') {
