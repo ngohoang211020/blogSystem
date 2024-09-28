@@ -22,9 +22,8 @@ pipeline {
     }
     stage('build and push image') {
       steps {
-        sh(script: """ sudo cp target/$PROCESS_NAME $PATH_PROJECT """, label: "Copy .jar file into deploy folder")
-        sh "  cd $PATH_PROJECT \
-              && docker build . -t ${IMAGE_TAG} \
+        sh(script: """ sudo cp . $PATH_PROJECT """, label: "Copy .jar file into deploy folder")
+        sh "  docker build $PATH_PROJECT -t ${IMAGE_TAG} \
               && docker tag ${IMAGE_TAG} ${DOCKER_HUB}/${IMAGE_TAG} \
               && echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin \
               && docker push ${DOCKER_HUB}/${IMAGE_TAG} \
