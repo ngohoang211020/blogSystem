@@ -21,7 +21,7 @@ pipeline {
     }
     stage('build maven') {
       steps {
-        sh "  cd $PATH_PROJECT && mvn clean install -DskipTests=true"
+        sh "  sudo cd $PATH_PROJECT && mvn clean install -DskipTests=true"
       }
     }
     stage('build and push image') {
