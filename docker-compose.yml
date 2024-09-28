@@ -10,7 +10,7 @@ services:
       spring.data.redis.password: 123456
       spring.datasource.url: jdbc:postgresql://localhost:5432/blogsystem
       spring.datasource.password: 123456
-      spring.mail.password: fczw lwes bdph sctm
+      spring.mail.password: fczw lwes bdph sctms
       spring.mail.username: blogsystem2110@gmail.com
       spring.mail.default-sender: blogsystem2110@gmail.com
       cloudinary.key: 117784362653246
