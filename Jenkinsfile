@@ -8,7 +8,7 @@ pipeline {
     APP_TYPE = "jar"
     TAG_NAME = "1.0"
     IMAGE_TAG = "${APP_NAME}:${TAG_NAME}"
-    PROCESS_NAME = "${APP_NAME}.${APP_TYPE}"
+    BUILD_MAVEN_SCRIPT = "mvn clean install -DskipTests=true"
     PATH_PROJECT = "/datas/${APP_USER}"
     DOCKER_HUB = "211020"
     DOCKERHUB_CREDENTIALS = credentials('docker-credentials')
@@ -17,8 +17,6 @@ pipeline {
     stage('Checkout source') {
       steps {
         sh(script: """ sudo cp -r . $PATH_PROJECT """, label: "Copy .jar file into deploy folder")
-        sh(script: """ ${BUILD_MAVEN_SCRIPT}  """, label: "Build with maven")
-        sh(script: """ ${BUILD_MAVEN_SCRIPT}  """, label: "Build with maven")
       }
     }
     stage('build maven') {
