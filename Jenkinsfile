@@ -23,9 +23,9 @@ pipeline {
     }
     stage('build and push image') {
       steps {
-        sh "  docker build $PATH_PROJECT -t ${IMAGE_TAG} \
-              && docker tag ${IMAGE_TAG} ${DOCKER_HUB}/${IMAGE_TAG} \
-              && echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin \
+        sh '  docker build $PATH_PROJECT -t ${IMAGE_TAG}'
+        sh '  docker tag ${IMAGE_TAG} ${DOCKER_HUB}/${IMAGE_TAG}'
+        sh "  echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin \
               && docker push ${DOCKER_HUB}/${IMAGE_TAG} \
               && docker rmi ${DOCKER_HUB}/${IMAGE_TAG} \
               && docker pull ${DOCKER_HUB}/${IMAGE_TAG} \
