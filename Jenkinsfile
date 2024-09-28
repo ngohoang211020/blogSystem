@@ -7,6 +7,7 @@ pipeline {
     APP_NAME = "blog-system"
     APP_TYPE = "jar"
     TAG_NAME = "1.0"
+    IMAGE_TAG = "${APP_NAME}:${TAG_NAME}"
     PROCESS_NAME = "${APP_NAME}.${APP_TYPE}"
     PATH_PROJECT = "/datas/${APP_USER}"
     BUILD_MAVEN_SCRIPT = "mvn clean install -DskipTests=true"
@@ -23,7 +24,6 @@ pipeline {
       steps {
         sh(script: """ sudo cp target/$PROCESS_NAME $PATH_PROJECT """, label: "Copy .jar file into deploy folder")
         sh "  cd $PATH_PROJECT \
-              && IMAGE_TAG = ${APP_USER}:${TAG_NAME} \
               && docker build . -t ${IMAGE_TAG} \
               && docker tag ${IMAGE_TAG} ${DOCKER_HUB}/${IMAGE_TAG} \
               && echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin \
