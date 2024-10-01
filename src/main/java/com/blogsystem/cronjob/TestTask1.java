@@ -18,11 +18,11 @@ public class TestTask1 implements Runnable{
     private final AccountPictureUtil accountPictureUtil;
     @Override
     public void run() {
-        try {
-            System.out.println("Current thread: "+Thread.currentThread().getName() + " at time: "+System.currentTimeMillis() + this.getClass().getName());
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            System.out.println("Current thread: "+Thread.currentThread().getName() + " at time: "+System.currentTimeMillis() + this.getClass().getName());
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 }

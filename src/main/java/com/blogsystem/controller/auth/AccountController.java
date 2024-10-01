@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class AccountController {
 
     @Operation(summary = "Register account")
     @PostMapping
-    public APIResponse<RegisterAccountResponse> register(@Valid @RequestBody RegisterAccountRequest registerAccountRequest) throws IOException {
+    public APIResponse<RegisterAccountResponse> register(@RequestBody RegisterAccountRequest registerAccountRequest) throws IOException {
         var registerResp = accountService.register(registerAccountRequest);
         return new APIResponse<>(registerResp, HttpStatus.OK);
     }

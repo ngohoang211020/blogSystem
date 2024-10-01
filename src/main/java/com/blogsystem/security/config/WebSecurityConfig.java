@@ -62,6 +62,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(
                         authorize -> authorize
                                 .requestMatchers(SYSTEM_WHITELIST.toArray(String[]::new)).permitAll()
+//                                .requestMatchers("/api/v2/users").hasRole("SUPER_ADMIN")
                                 // for everything else, the user has to be authenticated
                                 .anyRequest().authenticated()
                 )
@@ -72,10 +73,11 @@ public class WebSecurityConfig {
                         .authenticationEntryPoint(unauthorizedHandler))
                 // adding the custom filter before UsernamePasswordAuthenticationFilter in the filter chain
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterAfter(rateLimitFilter, JwtAuthorizationFilter.class)
+//                .addFilterAfter(rateLimitFilter, JwtAuthorizationFilter.class)
                 // setting stateless session, because we choose to implement Rest API
                 .sessionManagement(s -> s
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        ;
 
         return http.build();
     }
